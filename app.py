@@ -8,7 +8,7 @@ import json
 import os
 import random
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 app = Flask(__name__)
 
@@ -245,32 +245,47 @@ def roll_dice_expression(expr):
 
 @app.route('/api/sessions/list', methods=['GET'])
 def list_sessions():
-    """List all session notes"""
+    """List saved session notes grouped by campaign"""
     try:
         sessions = []
-        for file in SESSIONS_DIR.glob("*.txt"):
+        for file_path in sorted(SESSIONS_DIR.rglob('*.txt')):
+            relative_path = file_path.relative_to(SESSIONS_DIR)
+            session_name = relative_path.stem
+            campaign = 'General'
+            if len(relative_path.parts) > 1:
+                campaign = Path(*relative_path.parts[:-1]).as_posix()
+
             sessions.append({
-                "filename": file.name,
-                "name": file.stem,
-                "created": datetime.fromtimestamp(file.stat().st_ctime).isoformat()
+                "campaign": campaign,
+                "name": session_name,
+                "filename": relative_path.as_posix(),
+                "created": datetime.fromtimestamp(file_path.stat().st_ctime).isoformat()
             })
-        sessions.sort(key=lambda x: x['created'], reverse=True)
+
         return jsonify(sessions)
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/api/sessions/read/<session_name>', methods=['GET'])
-def read_session(session_name):
+@app.route('/api/sessions/read/<path:session_path>', methods=['GET'])
+def read_session(session_path):
     """Read session notes"""
     try:
-        file_path = SESSIONS_DIR / f"{session_name}.txt"
+        path = PurePosixPath(session_path)
+        if '..' in path.parts:
+            return jsonify({"error": "Invalid session path"}), 400
+
+        session_name = path.name
+        campaign_path = Path(*path.parts[:-1]) if len(path.parts) > 1 else Path()
+        file_path = SESSIONS_DIR / campaign_path / f"{session_name}.txt"
+
         if not file_path.exists():
             return jsonify({"error": "Session not found"}), 404
         
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
+
         return jsonify({
+            "campaign": campaign_path.as_posix() if campaign_path.parts else 'General',
             "name": session_name,
             "content": content,
             "created": datetime.fromtimestamp(file_path.stat().st_ctime).isoformat()
@@ -283,26 +298,42 @@ def save_session():
     """Save session notes"""
     try:
         data = request.json
+        campaign = data.get('campaign', 'General') or 'General'
         session_name = data.get('name', f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
         content = data.get('content', '')
-        
-        # Sanitize filename
+
+        # Sanitize campaign and session names
+        sanitized_campaign = " ".join(
+            "".join(c for c in part if c.isalnum() or c in (' ', '_', '-')).strip()
+            for part in campaign.split('/')
+        ).strip()
+        sanitized_campaign = sanitized_campaign or 'General'
         session_name = "".join(c for c in session_name if c.isalnum() or c in (' ', '_', '-')).strip()
-        
-        file_path = SESSIONS_DIR / f"{session_name}.txt"
-        
+        session_name = session_name or f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
+        campaign_path = SESSIONS_DIR / sanitized_campaign
+        campaign_path.mkdir(parents=True, exist_ok=True)
+        file_path = campaign_path / f"{session_name}.txt"
+
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        
-        return jsonify({"message": "Session saved", "filename": f"{session_name}.txt"})
+
+        return jsonify({"message": "Session saved", "filename": f"{sanitized_campaign}/{session_name}.txt"})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/api/sessions/delete/<session_name>', methods=['DELETE'])
-def delete_session(session_name):
+@app.route('/api/sessions/delete/<path:session_path>', methods=['DELETE'])
+def delete_session(session_path):
     """Delete a session"""
     try:
-        file_path = SESSIONS_DIR / f"{session_name}.txt"
+        path = PurePosixPath(session_path)
+        if '..' in path.parts:
+            return jsonify({"error": "Invalid session path"}), 400
+
+        session_name = path.name
+        campaign_path = Path(*path.parts[:-1]) if len(path.parts) > 1 else Path()
+        file_path = SESSIONS_DIR / campaign_path / f"{session_name}.txt"
+
         if file_path.exists():
             file_path.unlink()
             return jsonify({"message": "Session deleted"})

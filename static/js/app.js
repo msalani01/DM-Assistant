@@ -26,28 +26,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ============== NAVIGATION ==============
 function setupNavigation() {
-    const navBtns = document.querySelectorAll('.nav-btn');
-    
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
+    const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
+    const homeCards = Array.from(document.querySelectorAll('.feature-card.clickable'));
+    const navigators = navBtns.concat(homeCards);
+
+    navigators.forEach(element => {
+        element.addEventListener('click', () => {
+            // Remove active state from nav buttons and home cards
             navBtns.forEach(b => b.classList.remove('active'));
-            
+            homeCards.forEach(card => card.classList.remove('active'));
+
             // Remove active class from all sections
             document.querySelectorAll('.tool-section').forEach(sec => {
                 sec.classList.remove('active');
             });
-            
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Show corresponding section
-            const toolId = btn.getAttribute('data-tool');
+
+            // Activate clicked item and corresponding section
+            element.classList.add('active');
+            const toolId = element.getAttribute('data-tool');
             const section = document.getElementById(toolId);
             if (section) {
                 section.classList.add('active');
             }
-            
+
+            // Keep sidebar nav synced when clicking home cards
+            const activeNav = navBtns.find(btn => btn.getAttribute('data-tool') === toolId);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+
             appState.currentTool = toolId;
         });
     });
@@ -329,7 +336,7 @@ async function rollWildMagicSurge() {
         const data = await response.json();
         
         document.getElementById('randomContent').innerHTML = `
-            <h4>⚡ Wild Magic Surge (2024 Table):</h4>
+            <h4>Wild Magic Surge (2024 Table)</h4>
             <p>${data.result}</p>
         `;
         
@@ -357,32 +364,34 @@ function setupSessionNotes() {
 
 async function saveSessionNotes() {
     try {
-        const name = document.getElementById('sessionName').value.trim() || 
+        const campaign = document.getElementById('campaignName').value.trim() || 'General';
+        const name = document.getElementById('sessionName').value.trim() ||
                      `Session_${new Date().toISOString().slice(0, 10)}`;
         const content = document.getElementById('sessionContent').value;
-        
+
         if (!content) {
             alert('Please write some notes before saving');
             return;
         }
-        
+
         const response = await fetch('/api/sessions/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                campaign: campaign,
                 name: name,
                 content: content
             })
         });
-        
+
         const result = await response.json();
         alert('Session saved: ' + result.filename);
-        
+
         document.getElementById('sessionName').value = '';
         document.getElementById('sessionContent').value = '';
-        
+
         loadSessionsList();
-        
+
     } catch (error) {
         console.error('Error saving session:', error);
         alert('Error saving session');
@@ -393,33 +402,47 @@ async function loadSessionsList() {
     try {
         const response = await fetch('/api/sessions/list');
         const sessions = await response.json();
-        
+
         const container = document.getElementById('sessionsList');
-        
-        if (sessions.length === 0) {
+
+        if (!sessions || sessions.length === 0) {
             container.innerHTML = '<p class="placeholder">No sessions saved yet</p>';
             return;
         }
-        
+
+        const grouped = sessions.reduce((acc, session) => {
+            if (!acc[session.campaign]) acc[session.campaign] = [];
+            acc[session.campaign].push(session);
+            return acc;
+        }, {});
+
         container.innerHTML = '';
-        
-        sessions.forEach(session => {
-            const date = new Date(session.created).toLocaleString();
-            const item = document.createElement('div');
-            item.className = 'session-item';
-            item.innerHTML = `
-                <div class="session-item-info">
-                    <p class="session-name">${session.name}</p>
-                    <p class="session-date">${date}</p>
-                </div>
-                <div class="session-item-actions">
-                    <button class="load-session-btn" onclick="loadSession('${session.filename}')">Load</button>
-                    <button class="delete-session-btn" onclick="deleteSession('${session.filename}')">Delete</button>
-                </div>
-            `;
-            container.appendChild(item);
+
+        Object.keys(grouped).sort().forEach(campaign => {
+            const campaignSection = document.createElement('div');
+            campaignSection.className = 'session-campaign-block';
+            campaignSection.innerHTML = `<h5>${campaign}</h5>`;
+
+            grouped[campaign].sort((a, b) => new Date(b.created) - new Date(a.created)).forEach(session => {
+                const date = new Date(session.created).toLocaleString();
+                const item = document.createElement('div');
+                item.className = 'session-item';
+                item.innerHTML = `
+                    <div class="session-item-info">
+                        <p class="session-name">${session.name}</p>
+                        <p class="session-date">${date}</p>
+                    </div>
+                    <div class="session-item-actions">
+                        <button class="load-session-btn" onclick="loadSession('${encodeURIComponent(session.filename)}')">Load</button>
+                        <button class="delete-session-btn" onclick="deleteSession('${encodeURIComponent(session.filename)}')">Delete</button>
+                    </div>
+                `;
+                campaignSection.appendChild(item);
+            });
+
+            container.appendChild(campaignSection);
         });
-        
+
     } catch (error) {
         console.error('Error loading sessions:', error);
     }
@@ -427,21 +450,20 @@ async function loadSessionsList() {
 
 async function loadSession(filename) {
     try {
-        const sessionName = filename.replace('.txt', '');
-        const response = await fetch(`/api/sessions/read/${sessionName}`);
+        const sessionPath = decodeURIComponent(filename).replace('.txt', '');
+        const response = await fetch(`/api/sessions/read/${encodeURIComponent(sessionPath)}`);
         const session = await response.json();
-        
+
         if (session.error) {
             alert('Session not found');
             return;
         }
-        
+
+        document.getElementById('campaignName').value = session.campaign || 'General';
         document.getElementById('sessionName').value = session.name;
         document.getElementById('sessionContent').value = session.content;
-        
-        // Scroll to editor
         document.getElementById('sessionContent').focus();
-        
+
     } catch (error) {
         console.error('Error loading session:', error);
     }
@@ -449,17 +471,17 @@ async function loadSession(filename) {
 
 async function deleteSession(filename) {
     if (!confirm('Delete this session permanently?')) return;
-    
+
     try {
-        const sessionName = filename.replace('.txt', '');
-        const response = await fetch(`/api/sessions/delete/${sessionName}`, {
+        const sessionPath = decodeURIComponent(filename).replace('.txt', '');
+        const response = await fetch(`/api/sessions/delete/${encodeURIComponent(sessionPath)}`, {
             method: 'DELETE'
         });
-        
+
         const result = await response.json();
         alert(result.message);
         loadSessionsList();
-        
+
     } catch (error) {
         console.error('Error deleting session:', error);
     }

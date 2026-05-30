@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D&D 5.5e DM Assistant - 2024 Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -14,16 +18,16 @@
                 <p class="version">D&D 5.5e (2024)</p>
             </div>
             <nav class="sidebar-nav">
-                <button class="nav-btn active" data-tool="home">🏠 Home</button>
-                <button class="nav-btn" data-tool="npc-generator">👥 NPC Generator</button>
-                <button class="nav-btn" data-tool="encounter-builder">⚔️ Encounter Builder</button>
-                <button class="nav-btn" data-tool="initiative-tracker">📋 Initiative Tracker</button>
-                <button class="nav-btn" data-tool="dice-roller">🎲 Dice Roller</button>
-                <button class="nav-btn" data-tool="random-tables">🎰 Random Tables</button>
-                <button class="nav-btn" data-tool="session-notes">📝 Session Notes</button>
+                <button class="nav-btn active" data-tool="home"><span class="nav-icon">⋖</span> Home</button>
+                <button class="nav-btn" data-tool="npc-generator"><span class="nav-icon">✦</span> NPC Generator</button>
+                <button class="nav-btn" data-tool="encounter-builder"><span class="nav-icon">✧</span> Encounter Builder</button>
+                <button class="nav-btn" data-tool="initiative-tracker"><span class="nav-icon">▣</span> Initiative Tracker</button>
+                <button class="nav-btn" data-tool="dice-roller"><span class="nav-icon">◇</span> Dice Roller</button>
+                <button class="nav-btn" data-tool="random-tables"><span class="nav-icon">⟡</span> Random Tables</button>
+                <button class="nav-btn" data-tool="session-notes"><span class="nav-icon">✱</span> Session Notes</button>
             </nav>
             <div class="sidebar-footer">
-                <p class="help-text">⚠️ 2024 PHB & DMG Rules</p>
+                <p class="help-text">2024 PHB & DMG Rules</p>
             </div>
         </aside>
 
