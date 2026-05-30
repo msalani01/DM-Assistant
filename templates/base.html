@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5.5e DM Assistant - 2024 Edition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>DM Assistant</h1>
+                <p class="version">D&D 5.5e (2024)</p>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tool="home">🏠 Home</button>
+                <button class="nav-btn" data-tool="npc-generator">👥 NPC Generator</button>
+                <button class="nav-btn" data-tool="encounter-builder">⚔️ Encounter Builder</button>
+                <button class="nav-btn" data-tool="initiative-tracker">📋 Initiative Tracker</button>
+                <button class="nav-btn" data-tool="dice-roller">🎲 Dice Roller</button>
+                <button class="nav-btn" data-tool="random-tables">🎰 Random Tables</button>
+                <button class="nav-btn" data-tool="session-notes">📝 Session Notes</button>
+            </nav>
+            <div class="sidebar-footer">
+                <p class="help-text">⚠️ 2024 PHB & DMG Rules</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

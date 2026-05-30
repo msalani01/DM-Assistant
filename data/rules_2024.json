@@ -1,0 +1,385 @@
+{
+  "species": [
+    "Dragonborn", "Dwarf", "Elf", "Gnome", "Half-Elf",
+    "Half-Orc", "Halfling", "Human", "Tiefling", "Orc",
+    "Goblin", "Kobold"
+  ],
+  "backgrounds": [
+    {
+      "name": "Acolyte",
+      "ability_increases": "2 to Wisdom",
+      "origin_feat": "Acolyte"
+    },
+    {
+      "name": "Artisan",
+      "ability_increases": "2 to Intelligence",
+      "origin_feat": "Crafter"
+    },
+    {
+      "name": "Charlatan",
+      "ability_increases": "2 to Charisma",
+      "origin_feat": "Deception"
+    },
+    {
+      "name": "Criminal",
+      "ability_increases": "2 to Dexterity",
+      "origin_feat": "Dexterous Hands"
+    },
+    {
+      "name": "Entertainer",
+      "ability_increases": "2 to Charisma",
+      "origin_feat": "Entertainer"
+    },
+    {
+      "name": "Folk Hero",
+      "ability_increases": "2 to Strength",
+      "origin_feat": "Folk Hero"
+    },
+    {
+      "name": "Gladiator",
+      "ability_increases": "2 to Strength",
+      "origin_feat": "Gladiator"
+    },
+    {
+      "name": "Guild Artisan",
+      "ability_increases": "2 to Intelligence",
+      "origin_feat": "Guild Artisan"
+    },
+    {
+      "name": "Hermit",
+      "ability_increases": "2 to Wisdom",
+      "origin_feat": "Hermit"
+    },
+    {
+      "name": "Laborer",
+      "ability_increases": "2 to Strength",
+      "origin_feat": "Laborer"
+    },
+    {
+      "name": "Merchant",
+      "ability_increases": "2 to Intelligence",
+      "origin_feat": "Merchant"
+    },
+    {
+      "name": "Sage",
+      "ability_increases": "2 to Intelligence",
+      "origin_feat": "Sage"
+    },
+    {
+      "name": "Sailor",
+      "ability_increases": "2 to Dexterity",
+      "origin_feat": "Sailor"
+    },
+    {
+      "name": "Scribe",
+      "ability_increases": "2 to Intelligence",
+      "origin_feat": "Scribe"
+    },
+    {
+      "name": "Soldier",
+      "ability_increases": "2 to Strength",
+      "origin_feat": "Soldier"
+    },
+    {
+      "name": "Street Urchin",
+      "ability_increases": "2 to Dexterity",
+      "origin_feat": "Street Urchin"
+    }
+  ],
+  "classes": [
+    "Barbarian", "Bard", "Cleric", "Druid", "Fighter",
+    "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer",
+    "Warlock", "Wizard"
+  ],
+  "conditions_2024": [
+    {
+      "name": "Blinded",
+      "description": "A blinded creature can't see and automatically fails any ability check that requires sight."
+    },
+    {
+      "name": "Charmed",
+      "description": "A charmed creature can't willingly move away from the charmer and has disadvantage on attack rolls against the charmer."
+    },
+    {
+      "name": "Deafened",
+      "description": "A deafened creature can't hear and automatically fails any ability check that requires hearing."
+    },
+    {
+      "name": "Exhaustion",
+      "description": "2024: Exhaustion now has simplified stacking: 1 level = disadvantage on checks; 2 levels = half speed; 3 levels = disadvantage on attacks/saves; 4 levels = half hit point maximum; 5 levels = speed reduced to 0; 6 levels = death. (Simplified from 2014 6-level system)"
+    },
+    {
+      "name": "Frightened",
+      "description": "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight."
+    },
+    {
+      "name": "Grappled",
+      "description": "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed. The condition ends if the grappler is incapacitated or if an effect removes the grappled creature from the grappler's reach."
+    },
+    {
+      "name": "Incapacitated",
+      "description": "An incapacitated creature can't take actions or bonus actions."
+    },
+    {
+      "name": "Invisible",
+      "description": "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured."
+    },
+    {
+      "name": "Paralyzed",
+      "description": "A paralyzed creature is incapacitated and can't move or speak. The creature automatically fails Strength and Dexterity saving throws."
+    },
+    {
+      "name": "Petrified",
+      "description": "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging."
+    },
+    {
+      "name": "Poisoned",
+      "description": "A poisoned creature has disadvantage on attack rolls and ability checks."
+    },
+    {
+      "name": "Prone",
+      "description": "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition. A prone creature has disadvantage on attack rolls."
+    },
+    {
+      "name": "Restrained",
+      "description": "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed. Attack rolls against a restrained creature have advantage, and the creature's attack rolls have disadvantage."
+    },
+    {
+      "name": "Stunned",
+      "description": "A stunned creature is incapacitated, can't move, and can speak only falteringly."
+    },
+    {
+      "name": "Unconscious",
+      "description": "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings. The creature drops whatever it's holding and falls prone."
+    }
+  ],
+  "xp_thresholds_2024": {
+    "note": "2024 DMG updated XP thresholds - simplified and adjusted from 2014 edition",
+    "difficulty_levels": {
+      "level_1": {
+        "easy": 25,
+        "moderate": 50,
+        "hard": 75,
+        "deadly": 100
+      },
+      "level_2": {
+        "easy": 50,
+        "moderate": 100,
+        "hard": 150,
+        "deadly": 200
+      },
+      "level_3": {
+        "easy": 75,
+        "moderate": 150,
+        "hard": 225,
+        "deadly": 400
+      },
+      "level_4": {
+        "easy": 125,
+        "moderate": 250,
+        "hard": 375,
+        "deadly": 500
+      },
+      "level_5": {
+        "easy": 250,
+        "moderate": 500,
+        "hard": 750,
+        "deadly": 1100
+      },
+      "level_6": {
+        "easy": 300,
+        "moderate": 600,
+        "hard": 900,
+        "deadly": 1400
+      },
+      "level_7": {
+        "easy": 350,
+        "moderate": 750,
+        "hard": 1100,
+        "deadly": 1700
+      },
+      "level_8": {
+        "easy": 450,
+        "moderate": 900,
+        "hard": 1400,
+        "deadly": 2100
+      },
+      "level_9": {
+        "easy": 550,
+        "moderate": 1100,
+        "hard": 1600,
+        "deadly": 2400
+      },
+      "level_10": {
+        "easy": 600,
+        "moderate": 1200,
+        "hard": 1900,
+        "deadly": 2800
+      },
+      "level_20": {
+        "easy": 2400,
+        "moderate": 4800,
+        "hard": 7200,
+        "deadly": 10800
+      }
+    }
+  },
+  "personality_traits": [
+    "I'm always looking for a new friend to help me with my schemes.",
+    "I'm constantly amused by the ongoing chaos of daily life.",
+    "I love meeting new people and making new friends.",
+    "I'm running from something and trusting no one.",
+    "I have a dark, pessimistic worldview.",
+    "I see omens in everything and always live accordingly.",
+    "I'm a creature of habit and routine.",
+    "I'm fascinated by death and the undead.",
+    "I judge people harshly and let my judgement stay.",
+    "I speak without really thinking through my words."
+  ],
+  "flaws": [
+    "I'm compulsively honest and hate to lie.",
+    "I've a weakness for the pleasures of the flesh.",
+    "I'm quick to assume the worst in people.",
+    "I'm slow to trust and wary of new people.",
+    "I tend to view compromise as cowardice.",
+    "I'm suspicious of strangers and expect the worst.",
+    "I'm ill-tempered and quick to violent outbursts.",
+    "I have a strong urge to steal, especially magical items.",
+    "I put too much trust in those that wield power within my faith's hierarchy.",
+    "I'm horribly jealous of anyone who can outshine my handiwork."
+  ],
+  "secrets": [
+    "I stole something and hope no one discovers this.",
+    "I'm actually a disguised monster or creature.",
+    "I'm wanted by a powerful organization.",
+    "I have a hidden child somewhere.",
+    "I'm a spy for a rival faction.",
+    "I'm a deserter from the military.",
+    "I'm harboring a dangerous fugitive.",
+    "I have a forbidden romance.",
+    "I'm actually noble-born in disguise.",
+    "I made a pact with a fiend or celestial.",
+    "I've committed a terrible crime.",
+    "I'm slowly being corrupted by a cursed item."
+  ],
+  "weather": [
+    "Clear sky",
+    "Sunny with scattered clouds",
+    "Overcast",
+    "Light rain",
+    "Heavy rain",
+    "Torrential downpour",
+    "Fog",
+    "Dense fog",
+    "Light snow",
+    "Heavy snow",
+    "Blizzard",
+    "Wind gusts",
+    "Strong winds",
+    "Calm",
+    "Mist",
+    "Aurora (magical lights)",
+    "Meteor shower",
+    "Unusual atmospheric conditions"
+  ],
+  "dungeon_rooms": [
+    "An empty chamber with dust and cobwebs",
+    "A room with ancient murals on the walls",
+    "A treasury filled with coins and valuables",
+    "A library with countless books and scrolls",
+    "A shrine with a broken statue at its center",
+    "A barracks with old bunks and weapons",
+    "A kitchen with rotting food and supplies",
+    "A torture chamber with instruments",
+    "A bedroom with a luxurious bed",
+    "A throne room with an ornate throne",
+    "A ritual chamber with arcane symbols",
+    "An alchemist's laboratory",
+    "A forge with ancient tools",
+    "An armory with weapons and armor",
+    "A vault with a massive door",
+    "A garden room with withered plants",
+    "An observatory with a crystal lens",
+    "A prison with cells",
+    "A crypt with stone sarcophagi",
+    "A waterfall cavern",
+    "A room full of mirrors",
+    "A treasure vault with traps",
+    "A music chamber with instruments",
+    "A meditation room",
+    "A flooded chamber",
+    "A crystal-filled cavern",
+    "A room with a large painting",
+    "A meeting hall",
+    "A storage chamber",
+    "A staircase leading down"
+  ],
+  "merchant_inventory": [
+    { "item": "Potion of Healing", "value": "50 gp", "quantity": "2d4" },
+    { "item": "Rope (50 feet)", "value": "1 gp", "quantity": "1d6" },
+    { "item": "Torch", "value": "1 cp", "quantity": "2d10" },
+    { "item": "Lantern", "value": "5 gp", "quantity": "1d4" },
+    { "item": "Oil (1 pint)", "value": "5 sp", "quantity": "2d4" },
+    { "item": "Waterskin", "value": "5 sp", "quantity": "1d8" },
+    { "item": "Backpack", "value": "2 gp", "quantity": "1d4" },
+    { "item": "Bedroll", "value": "1 gp", "quantity": "1d6" },
+    { "item": "Caltrops (20)", "value": "1 gp", "quantity": "1d4" },
+    { "item": "Magnifying glass", "value": "100 gp", "quantity": "1" },
+    { "item": "Mirror", "value": "5 gp", "quantity": "1d3" },
+    { "item": "Holy symbol", "value": "25 gp", "quantity": "1d2" },
+    { "item": "Dice set", "value": "1 sp", "quantity": "1d6" },
+    { "item": "Thieves' tools", "value": "25 gp", "quantity": "1" },
+    { "item": "Scroll case", "value": "1 gp", "quantity": "1d4" }
+  ],
+  "wild_magic_surge_table_2024": [
+    "You cast Fireball centered on yourself.",
+    "You cast Magic Missile using the target as the caster.",
+    "Roll a d10. Your height changes by a number of inches equal to the roll. If the roll is odd, you shrink. If even, you grow.",
+    "You cast Polymorph on yourself. If you fail the save, you turn into a sheep for the spell's duration.",
+    "Floatation: You float upward 10 feet at the end of your turn. An object held by another creature falls to the ground.",
+    "You lose the ability to speak for 1 minute. You can still cast spells with verbal components by doing so silently.",
+    "A modron chosen at random appears in an unoccupied space within 5 feet of you, then disappears 1 minute later.",
+    "You gain resistance to all damage for the next minute.",
+    "A random creature within 60 feet takes 1d10 damage from magical energy.",
+    "Up to three creatures you choose within 30 feet make saves or are stunned until the end of their next turn.",
+    "You're transported to the Astral Plane until the end of your next turn, after which you return to the space you left or the nearest unoccupied space if that space is occupied.",
+    "Maximize the damage of the next damaging spell you cast within 1 minute.",
+    "Roll 1d10. Your age changes by a number of years equal to the roll. If the roll is odd, you age forward. If even, you age backward. If this would cause you to be younger than age 1 or older than your maximum life span, you instead become age 1 or your maximum life span.",
+    "1d6 flumphs controlled by the GM appear in unoccupied spaces within 60 feet of you and are frightened of you. They vanish after 1 minute.",
+    "You regain 2d10 hit points.",
+    "You turn into a potted plant until the start of your next turn. While a plant, you can't move or use actions at all.",
+    "For the next minute, you can see any invisible creature if you have line of sight to it.",
+    "One creature you can see within 60 feet experiences a moment of perfect self-reflection and takes 1d10 psychic damage.",
+    "Within 30 feet of you, creatures have disadvantage on the next saving throw they make before the end of your next turn.",
+    "You cast Cure Wounds on yourself."
+  ],
+  "random_events": [
+    "A traveling merchant arrives with exotic goods.",
+    "A noble offers a lucrative but morally questionable job.",
+    "Strange noises echo through the settlement at night.",
+    "A plague begins affecting the local population.",
+    "A festival or celebration draws crowds.",
+    "Bandits attack the road.",
+    "A mysterious stranger arrives looking for someone.",
+    "A natural disaster strikes—storm, earthquake, or flood.",
+    "A child goes missing under mysterious circumstances.",
+    "A ancient artifact is discovered nearby.",
+    "The local lord declares new taxes or laws.",
+    "A competing guild moves into the territory.",
+    "A monster has been spotted in the area.",
+    "A famous bard or performer arrives in town.",
+    "A crime spree begins in the settlement.",
+    "A prophecy or omen concerns the townsfolk.",
+    "An old enemy resurfaces.",
+    "A new religious movement gains followers.",
+    "A shipment of goods goes missing.",
+    "A powerful spell or curse manifests."
+  ],
+  "notes_2024_changes": {
+    "species": "2024 PHB now uses 'Species' instead of 'Race'. All species get ability score increases and Origin Feat from backgrounds.",
+    "backgrounds": "2024 PHB backgrounds grant +2 to an ability and an Origin Feat, replacing the old skill associations.",
+    "exhaustion": "2024 simplifies Exhaustion to 6 levels with clearer effects. Levels no longer stack in separate ability categories.",
+    "spells": "2024 PHB reorganizes spell lists by class with reduced shared spells between classes.",
+    "encounter_xp": "2024 DMG has adjusted XP thresholds for encounter balance, generally more forgiving for high-level parties."
+  }
+}

@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-header">
+    <h2>D&D 5.5e (2024 Edition) Dungeon Master Assistant</h2>
+    <p class="subtitle">All features run offline • No internet required • Based on 2024 PHB & DMG</p>
+</div>
+
+<!-- HOME SECTION -->
+<section id="home" class="tool-section active">
+    <div class="welcome-card">
+        <h3>Welcome, Dungeon Master</h3>
+        <p>This assistant is built around the 2024 edition of D&D 5th Edition rules. Key differences from 2014 edition are flagged throughout.</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h4>NPC Generator</h4>
+                <p>Generate random NPCs with 2024 Species, backgrounds, and origin feats</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚔️</div>
+                <h4>Encounter Builder</h4>
+                <p>Use updated 2024 XP thresholds for balanced encounters</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h4>Initiative Tracker</h4>
+                <p>Track combat with 2024 condition rules (including new exhaustion)</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎲</div>
+                <h4>Dice Roller</h4>
+                <p>Roll any dice expression with advantage/disadvantage support</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎰</div>
+                <h4>Random Tables</h4>
+                <p>Generate weather, rooms, events, and wild magic surges</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h4>Session Notes</h4>
+                <p>Save and organize session notes locally</p>
+            </div>
+        </div>
+
+        <div class="rules-note">
+            <h4>⚠️ 2024 D&D Edition Notes:</h4>
+            <ul>
+                <li><strong>Species instead of Race</strong> - All ancestries are now called "Species"</li>
+                <li><strong>Backgrounds grant feats</strong> - Each background gives +2 to ability and an Origin Feat</li>
+                <li><strong>Simplified Exhaustion</strong> - Now 6 levels with clearer stacking effects</li>
+                <li><strong>Updated XP thresholds</strong> - Adjusted encounter building guidelines</li>
+                <li><strong>Weapon Mastery</strong> - New property system for weapons</li>
+                <li><strong>Class-specific spells</strong> - Spell lists no longer universally shared</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- NPC GENERATOR SECTION -->
+<section id="npc-generator" class="tool-section">
+    <h3>NPC Generator 👥</h3>
+    <p class="tool-description">Generate random NPCs with 2024 Species and Backgrounds</p>
+    
+    <div class="tool-controls">
+        <button class="btn btn-primary" id="generateNpcBtn">Generate NPC</button>
+        <button class="btn btn-secondary" id="saveNpcBtn" style="display: none;">Save NPC</button>
+    </div>
+
+    <div id="npcResult" class="result-card" style="display: none;">
+        <div class="npc-info">
+            <div class="npc-header">
+                <h4 id="npcName"></h4>
+                <span class="npc-species" id="npcSpecies"></span>
+            </div>
+            <div class="npc-details">
+                <p><strong>Class/Occupation:</strong> <span id="npcOccupation"></span></p>
+                <p><strong>Personality:</strong> <span id="npcPersonality"></span></p>
+                <p><strong>Flaw:</strong> <span id="npcFlaw"></span></p>
+                <p><strong>Secret:</strong> <span id="npcSecret"></span></p>
+                <div id="npcBackgroundSection" style="display: none;">
+                    <p><strong>Background:</strong> <span id="npcBackground"></span> <span class="badge" id="npcFeat"></span></p>
+                    <small class="rules-note">📌 2024: Backgrounds grant +2 ability and an Origin Feat</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ENCOUNTER BUILDER SECTION -->
+<section id="encounter-builder" class="tool-section">
+    <h3>Encounter Builder ⚔️</h3>
+    <p class="tool-description">Design balanced encounters using 2024 XP thresholds</p>
+    
+    <div class="tool-controls">
+        <div class="form-group">
+            <label for="partySize">Party Size:</label>
+            <input type="number" id="partySize" min="1" max="8" value="4" class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="partyLevel">Average Party Level:</label>
+            <input type="number" id="partyLevel" min="1" max="20" value="5" class="form-input">
+        </div>
+        <button class="btn btn-primary" id="suggestEncounterBtn">Calculate Thresholds</button>
+    </div>
+
+    <div id="encounterResult" class="result-card" style="display: none;">
+        <div class="xp-thresholds">
+            <h4>XP Thresholds for Encounter (2024 DMG)</h4>
+            <div class="threshold-row">
+                <span class="threshold-label">Low Difficulty:</span>
+                <span class="threshold-value" id="lowXp"></span> XP
+            </div>
+            <div class="threshold-row">
+                <span class="threshold-label">Moderate Difficulty:</span>
+                <span class="threshold-value" id="moderateXp"></span> XP
+            </div>
+            <div class="threshold-row">
+                <span class="threshold-label">Hard Difficulty:</span>
+                <span class="threshold-value" id="hardXp"></span> XP
+            </div>
+            <div class="threshold-row">
+                <span class="threshold-label">Severe Difficulty:</span>
+                <span class="threshold-value" id="severeXp"></span> XP
+            </div>
+            <small class="rules-note">📌 2024: Simplified XP thresholds adjusted from 2014 edition</small>
+        </div>
+
+        <div class="monster-list">
+            <h4>Add Monsters to Encounter</h4>
+            <div class="form-group">
+                <label for="monsterName">Monster Name:</label>
+                <input type="text" id="monsterName" placeholder="e.g. Goblin, Dragon" class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="monsterCR">CR / XP Value:</label>
+                <input type="number" id="monsterCR" min="0" step="0.5" placeholder="XP value" class="form-input">
+            </div>
+            <button class="btn btn-secondary" id="addMonsterBtn">Add Monster</button>
+
+            <div id="monsterTable" style="margin-top: 15px;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Monster</th>
+                            <th>XP</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monsterTableBody">
+                    </tbody>
+                </table>
+                <div class="total-xp">Total XP: <span id="totalMonsterXp">0</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INITIATIVE TRACKER SECTION -->
+<section id="initiative-tracker" class="tool-section">
+    <h3>Initiative Tracker 📋</h3>
+    <p class="tool-description">Track combat with 2024 condition tracking</p>
+    
+    <div class="tool-controls">
+        <button class="btn btn-primary" id="addCombatantBtn">Add Combatant</button>
+        <button class="btn btn-secondary" id="saveInitiativeBtn">Save Combat</button>
+        <button class="btn btn-secondary" id="resetInitiativeBtn">Reset All</button>
+    </div>
+
+    <div class="initiative-setup" id="initiativeSetup">
+        <div class="form-group">
+            <label for="combatantName">Name:</label>
+            <input type="text" id="combatantName" placeholder="Character/Monster name" class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="combatantInitiative">Initiative Roll:</label>
+            <input type="number" id="combatantInitiative" placeholder="Initiative bonus" class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="combatantHP">Hit Points:</label>
+            <input type="number" id="combatantHP" min="1" class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="combatantAC">Armor Class:</label>
+            <input type="number" id="combatantAC" min="1" class="form-input">
+        </div>
+        <button class="btn btn-success" id="submitCombatantBtn">Confirm</button>
+    </div>
+
+    <div id="initiativeTracker" class="tracker-container" style="display: none;">
+        <div class="tracker-info">
+            <h4>Combat Round <span id="roundNumber">1</span></h4>
+            <div class="round-controls">
+                <button class="btn btn-sm" id="nextRoundBtn">Next Round</button>
+                <button class="btn btn-sm" id="prevRoundBtn">Previous Round</button>
+            </div>
+        </div>
+
+        <table class="tracker-table">
+            <thead>
+                <tr>
+                    <th>Initiative</th>
+                    <th>Name</th>
+                    <th>HP</th>
+                    <th>AC</th>
+                    <th>Conditions</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="trackerTableBody">
+            </tbody>
+        </table>
+
+        <div class="condition-quick-panel">
+            <h4>Quick Condition Toggle</h4>
+            <div id="selectedCombatant" class="selected-info" style="display: none;">
+                <p id="selectedName"></p>
+                <div class="condition-buttons">
+                    <button class="condition-btn" data-condition="blinded">Blinded</button>
+                    <button class="condition-btn" data-condition="charmed">Charmed</button>
+                    <button class="condition-btn" data-condition="deafened">Deafened</button>
+                    <button class="condition-btn" data-condition="frightened">Frightened</button>
+                    <button class="condition-btn" data-condition="grappled">Grappled</button>
+                    <button class="condition-btn" data-condition="invisible">Invisible</button>
+                    <button class="condition-btn" data-condition="paralyzed">Paralyzed</button>
+                    <button class="condition-btn" data-condition="poisoned">Poisoned</button>
+                    <button class="condition-btn" data-condition="prone">Prone</button>
+                    <button class="condition-btn" data-condition="restrained">Restrained</button>
+                    <button class="condition-btn" data-condition="exhaustion">Exhaustion (2024)</button>
+                </div>
+                <small class="rules-note">📌 2024: Exhaustion simplified to 6 levels</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DICE ROLLER SECTION -->
+<section id="dice-roller" class="tool-section">
+    <h3>Dice Roller 🎲</h3>
+    <p class="tool-description">Roll any dice expression (2d6+3, 1d20, etc.)</p>
+    
+    <div class="tool-controls">
+        <div class="form-group">
+            <label for="diceExpression">Dice Expression:</label>
+            <input type="text" id="diceExpression" placeholder="e.g. 2d6+3, 1d20" class="form-input" value="1d20">
+        </div>
+        <div class="form-group checkbox">
+            <label>
+                <input type="checkbox" id="advantageCheckbox"> Advantage
+            </label>
+            <label>
+                <input type="checkbox" id="disadvantageCheckbox"> Disadvantage
+            </label>
+        </div>
+        <button class="btn btn-primary" id="rollDiceBtn">🎲 Roll</button>
+    </div>
+
+    <div id="diceResult" class="result-card" style="display: none;">
+        <div class="dice-result-display">
+            <div class="total-roll">
+                <span id="rollTotal" class="large-number"></span>
+            </div>
+            <div class="roll-breakdown">
+                <p><strong>Expression:</strong> <span id="rollExpression"></span></p>
+                <p><strong>Method:</strong> <span id="rollMethod"></span></p>
+                <p><strong>Individual Rolls:</strong> <span id="rollBreakdown"></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RANDOM TABLES SECTION -->
+<section id="random-tables" class="tool-section">
+    <h3>Random Tables 🎰</h3>
+    <p class="tool-description">Generate random content for encounters and world-building</p>
+    
+    <div class="random-buttons-grid">
+        <button class="btn btn-primary" id="rollWeatherBtn">🌤️ Random Weather</button>
+        <button class="btn btn-primary" id="rollRoomBtn">🏛️ Dungeon Room</button>
+        <button class="btn btn-primary" id="rollMerchantBtn">🛍️ Merchant Inventory</button>
+        <button class="btn btn-primary" id="rollEventBtn">🎭 Random Event</button>
+        <button class="btn btn-primary" id="rollWildMagicBtn">✨ Wild Magic Surge (2024)</button>
+    </div>
+
+    <div id="randomResult" class="result-card" style="display: none;">
+        <div id="randomContent"></div>
+        <small id="randomNote" class="rules-note" style="display: none;"></small>
+    </div>
+</section>
+
+<!-- SESSION NOTES SECTION -->
+<section id="session-notes" class="tool-section">
+    <h3>Session Notes 📝</h3>
+    <p class="tool-description">Write and save session notes locally as .txt files</p>
+    
+    <div class="tool-controls">
+        <div class="form-group">
+            <label for="sessionName">Session Name:</label>
+            <input type="text" id="sessionName" placeholder="e.g. Session 5 - Dragon's Lair" class="form-input">
+        </div>
+        <button class="btn btn-primary" id="saveSessionBtn">💾 Save Session</button>
+        <button class="btn btn-secondary" id="refreshSessionsBtn">🔄 Refresh List</button>
+    </div>
+
+    <div class="session-editor">
+        <textarea id="sessionContent" placeholder="Write your session notes here..."></textarea>
+    </div>
+
+    <div class="sessions-list">
+        <h4>Previous Sessions</h4>
+        <div id="sessionsList" class="sessions-container">
+            <p class="placeholder">No sessions saved yet</p>
+        </div>
+    </div>
+</section>
+
+<!-- 2024 RULES REFERENCE -->
+<div id="rulesReference" class="rules-panel" style="display: none;">
+    <h4>2024 D&D Conditions</h4>
+    <div id="conditionsList"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Make rules globally accessible
+    const RULES_2024 = {{ rules | tojson }};
+</script>
+{% endblock %}
